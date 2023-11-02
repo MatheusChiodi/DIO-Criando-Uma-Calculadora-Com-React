@@ -1,64 +1,16 @@
 import Button from './components/Button';
 import Input from './components/Input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [currentNumber, setCurrentNumber] = useState('');
-  const [operator, setOperator] = useState('');
-  const [firstNumber, setFirstNumber] = useState('');
-  const [secondNumber, setSecondNumber] = useState('');
 
   const handleClear = () => {
     setCurrentNumber('');
-    setOperator('');
-    setFirstNumber('');
-    setSecondNumber('');
-  };
+  }
 
   const handleAddNumber = (number) => {
-    if (operator === '') {
-      if (number != 'X' && number != '/' && number != '-' && number != '+') {
-        if(firstNumber === '' && number === '0'){
-          setCurrentNumber('');
-        }else{
-          setCurrentNumber(currentNumber + number);
-          setFirstNumber(firstNumber + number);
-        }
-        
-      } else {
-        setCurrentNumber(currentNumber + number);
-        setOperator(number);
-      }
-    } else {
-      if (number != 'X' && number != '/' && number != '-' && number != '+') {
-        setCurrentNumber(currentNumber + number);
-        setSecondNumber(secondNumber + number);
-      }
-    }
-  };
-
-  const handleCalculate = () => {
-    if (firstNumber != '' && secondNumber != '') {
-      setCurrentNumber('');
-      const x = Number(firstNumber);
-      const y = Number(secondNumber);
-
-      if (operator === 'X') {
-        setCurrentNumber(x * y);
-        setFirstNumber(x * y);
-      } else if (operator === '/') {
-        setCurrentNumber(x / y);
-        setFirstNumber(x / y);
-      } else if (operator === '-') {
-        setCurrentNumber(x - y);
-        setFirstNumber(x - y);
-      } else if (operator === '+') {
-        setCurrentNumber(x + y);
-        setFirstNumber(x + y);
-      }
-    }
-    setSecondNumber('');
-    setOperator('');
+    setCurrentNumber((prev) => `${prev}${number}`);
   };
 
   return (
@@ -69,7 +21,7 @@ function App() {
           <Button value={'X'} onClick={() => handleAddNumber('X')} />
           <Button value={'/'} onClick={() => handleAddNumber('/')} />
           <Button value={'C'} onClick={() => handleClear()} />
-          <Button value={'0'} onClick={() => handleAddNumber('0')} />
+          <Button value={'X'} onClick={() => handleAddNumber('X')} />
         </div>
         <div className="flex justify-around mt-[-10px] px-[3px]">
           <Button value={7} onClick={() => handleAddNumber('7')} />
@@ -87,7 +39,7 @@ function App() {
           <Button value={1} onClick={() => handleAddNumber('1')} />
           <Button value={2} onClick={() => handleAddNumber('2')} />
           <Button value={3} onClick={() => handleAddNumber('3')} />
-          <Button value={'='} onClick={() => handleCalculate()} />
+          <Button value={'='} onClick={() => handleAddNumber('=')} />
         </div>
       </div>
     </div>
